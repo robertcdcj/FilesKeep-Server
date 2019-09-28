@@ -1,0 +1,27 @@
+Share setting
+
+turn ShareEntryModal into container
+fetch entry info on load (public share state, shared with state)
+
+addSharePerson(entryId, entryType, newEmail)
+removeSharePerson(entryId, entryType, email)
+setPublicShare(entryId, entryType, newSetting)
+
+spinner
+
+
+
+Share access
+private share:
+GET	/entries/sharedWithMe
+
+GET	/entries/shared/:folderId	usual folder view
+GET	/files/shared/:fileId		download
+	
+
+
+Server
+PUT /entries/:entryId/share
+authenticate: userId === entry.ownerId
+	takes: type
+	takes(optional): publicShare, privateShareAdd, privateShareRemove

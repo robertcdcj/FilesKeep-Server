@@ -1,0 +1,32 @@
+const somePromise = (value) => {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			if (value === 0) {
+				resolve(0);
+			} else {
+				resolve(value - 1);
+			}
+		}, 1000);
+		
+	});
+}
+
+
+const aFunction = (value) => {
+	return somePromise(value).then((result) => {
+		console.log(`Current value: ${value}.`);
+		if (result === 0) {
+			return "Done.";
+		} else {
+			return aFunction(result);
+		}
+	});
+};
+
+aFunction(5)
+.then((result) => {
+	console.log(result);
+})
+.catch((err) => {
+	console.log(err);
+});
