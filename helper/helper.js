@@ -22,7 +22,7 @@ module.exports.entrySharedWithUser = (entry, user) => {
                 return false;
             } else {
                 // recursively check ancestors for access permission
-                return entrySharedWithUser(parentEntry, user);
+                return this.entrySharedWithUser(parentEntry, user);
             }
         });
     }
