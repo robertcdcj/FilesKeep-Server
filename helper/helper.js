@@ -1,6 +1,6 @@
 const Folder = require("../models/Folder");
 
-// a helper that recursively searches if an user has access permission on a specified entry
+// a helper that recursively searches if user has access permission on a specified entry
 module.exports.entrySharedWithUser = (entry, user) => {
     if (entry.publicShare === true || (user && entry.privateShare && entry.privateShare.includes(user.email))) {
         // the current entry is either publicly shared or privately shared with the user

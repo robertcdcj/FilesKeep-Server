@@ -22,7 +22,7 @@ const { entrySharedWithUser } = require("../helper/helper");
 router.get("/:fileId", withAuth, getUser, getFile, (req, res) => {
     const user = req.user;
     const file = req.file;
-    
+
     if (fs.existsSync(`./uploads/${user._id}/${file._id}`)) {
         res.download(`./uploads/${user._id}/${file._id}`, file.name);
     } else {
@@ -34,7 +34,7 @@ router.get("/:fileId", withAuth, getUser, getFile, (req, res) => {
 router.get("/shared/:fileId", findAuth, findUser, getFile, (req, res) => {
     const file = req.file;
     const user = req.user;
-    
+
     entrySharedWithUser(file, user).then((result) => {
         if (result === true) {
             res.download(`./uploads/${file.userId}/${file._id}`, file.name);
@@ -43,7 +43,7 @@ router.get("/shared/:fileId", findAuth, findUser, getFile, (req, res) => {
                 res.status(401).json({ error: "File is not shared with user." });
             } else {
                 res.status(401).json({ error: "File is not shared publicly." });
-            }            
+            }
         }
     });
 });
@@ -90,7 +90,12 @@ var storage = multer.diskStorage({
     }
 })
 
-var upload = multer({ storage: storage });
+var upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 10  // 10 MB
+    }
+});
 
 router.post("/", withAuth, getUser, (req, res) => {
     const user = req.user;
